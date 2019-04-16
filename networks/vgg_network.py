@@ -96,7 +96,7 @@ class vgg_network(object):
         # save weights
 	def save_weights(self, sess, directory):
 		for layerN in range(len(self.layer)):
-                        self.layer[N].save_weights(sess, directory)
+                        self.layer[layerN].save_weights(sess, directory)
 	
 	
 	# prune weights

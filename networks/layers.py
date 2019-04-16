@@ -22,6 +22,7 @@ class layer(object):
 		# mask for pruning, 1: valid weights, 0: pruned weights
 		self.pruning_mask_data = np.ones(self.w.shape, dtype=np.float32)
 		self.N_clusters = N_clusters # for quantization
+		self.clusters_masks = []
 
 
         # Forward pass of a layer of network
@@ -55,9 +56,10 @@ class layer(object):
 	def prune_weights_ElementWise(self, sess, threshold):
                 w_data = sess.run(self.w)
                 self.pruning_mask_data = (np.abs(w_data) >= threshold).astype(np.float32)
-                print ('layer:', self.name)
-                print ('\nremaining weights:', int(np.sum(self.pruning_mask_data)))
-                print ('\ntotal weights:', self.num_total_weights)
+                print ('\nlayer:', self.name)
+                print ('remaining weights:', int(np.sum(self.pruning_mask_data)))
+                print ('total weights:', self.num_total_weights)
+                print ('compression rate: %', 100*(int(np.sum(self.pruning_mask_data))/int(self.num_total_weights)))
                 sess.run(self.assign_w, feed_dict={self.w_var: self.pruning_mask_data*w_data})
 
 
@@ -92,7 +94,7 @@ class layer(object):
 				distances = np.abs(w_data - np.reshape(self.centroids,(-1, 1, 1)))
 				distances = np.transpose(distances, (1,2,0))				
 			classes = np.argmin(distances, axis=-1)
-			self.clusters_masks = []
+			#self.clusters_masks = []
 			for i in range(self.N_clusters):
 				cluster_mask = (classes == i).astype(np.float32) * self.pruning_mask_data
 				self.clusters_masks.append(cluster_mask) 
@@ -105,12 +107,14 @@ class layer(object):
 				break
 			centroids_prev = np.copy(self.centroids)
 		self.quantize_weights_update_KMeans(sess)
+		#print('>>> ', len(self.clusters_masks))
 		
 
 
 	# quantize gradient				
 	def group_and_reduce_gradient_KMeans(self, grad):
 		grad_out = np.zeros(self.w.shape, dtype=np.float32)
+		#print('\n\n >>>>>>>>>> ',len(self.clusters_masks))
 		for i in range(self.N_clusters):
 			cluster_mask = self.clusters_masks[i]
 			centroid_grad = np.sum(grad * cluster_mask)

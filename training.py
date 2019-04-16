@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import sys, os, shutil
 from networks.vgg_network import *
 from configs.config import *
-
+from visualization.visualization import *
 
 
 
@@ -52,23 +52,26 @@ if __name__ == "__main__":
         
         iters = []
         iters_acc = []
-
+        stage = ''
         for i in range(FLAGS.all_steps):
 
                 batch_x, batch_y = mnist.train.next_batch(50)
                 batch_x = np.reshape(batch_x,(-1, 28, 28,1))
                 feed_dict={x_PH: batch_x, labels: batch_y}
 		
-                # network training 
-                if i < FLAGS.full_training_steps:
+                # Network training 
+                if i <= FLAGS.full_training_steps:
                         sess.run(train_step, feed_dict=feed_dict)
+                        stage = 'training              '                                 
+
+                # Pruning 
+                elif i==FLAGS.pruning_step:
+                        oNetwork.prune_weights_ElementWise(sess, threshold=0.1)
+                        stage = 'pruning               '         
                                                          
-                # pruning & fine tunning
-                elif  i < FLAGS.pruning_fine_tunning_steps:
+                # Pruning & fine tunning
+                elif  i <= FLAGS.pruning_fine_tunning_steps:
                         # prune weights
-                        if i%FLAGS.pruning_fine_tunning_step==0:
-                                print ('iter:', i, 'prune weights')
-                                oNetwork.prune_weights_ElementWise(sess, threshold=0.1)
                         grads_data = sess.run(grads, feed_dict={x_PH: batch_x, labels: batch_y})
                         feed_dict = {}
                         # prune weights gradient
@@ -76,13 +79,16 @@ if __name__ == "__main__":
                         sess.run(train_step, feed_dict=feed_dict)
                         # update weights
                         oNetwork.prune_weights_update_ElementWise(sess)
-                                 
-                # quantization & fine tunning
-                else:
+                        stage = 'pruning & fine tuning '         
+
+                # Quantization 
+                elif i==FLAGS.quantization_step:
+                        oNetwork.quantize_weights_KMeans(sess)
+                        stage = 'quantization          '
+                                
+                # Quantization & fine tunning
+                elif i <= FLAGS.quantization_fine_tunning_steps:
                         # quantizate weights
-                        if i==FLAGS.quantization_fine_tunning_step:
-                                print ('iter:', i, "quantize weights")
-                                oNetwork.quantize_weights_KMeans(sess)
                         grads_data = sess.run(grads, feed_dict={x_PH: batch_x, labels: batch_y})
                         feed_dict = {}
                         # update gradients
@@ -91,8 +97,9 @@ if __name__ == "__main__":
                         # update centroids
                         oNetwork.quantize_centroids_update_KMeans(sess)
                         oNetwork.quantize_weights_update_KMeans(sess)
+                        stage = 'quantize & fine tuning'
   		
-                # evaluation & measure accuracy 
+                # Evaluation & measure accuracy 
                 if i%10 == 0:
                         batches_acc = []
                         for j in range(10):
@@ -103,18 +110,13 @@ if __name__ == "__main__":
                         acc = np.mean(batches_acc)
                         iters.append(i)
                         iters_acc.append(acc)				
-                        print ('iter:', i, 'test accuracy:', acc)
+                        print (stage, ' , iter:', i, 'test accuracy:', acc)
                         oNetwork.save_weights_histogram(sess, FLAGS.histograms_dir+FLAGS.model_name, i)
 
         oNetwork.save_weights(sess, FLAGS.weights_dir+FLAGS.model_name)
-        
-        plt.figure(figsize=(10, 4))
-        plt.ylabel('accuracy', fontsize=12)
-        plt.xlabel('iteration', fontsize=12)
-        plt.grid(True)
-        plt.plot(iters, iters_acc, color='0.4')
-        plt.savefig('./train_acc', dpi=1200)
+        save(iters, iters_acc)
         print ('Training finished')
+
 
 
 
