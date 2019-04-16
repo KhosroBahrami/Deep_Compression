@@ -19,21 +19,21 @@ I implemented pruning and quantization for convolutional and fully connected lay
 ### Network Compression
 The network compression has the following steps:
 
-### 1.Network Training 
-In this step, I train the whole network (e.g. VGG) for a number iterations for classification.
+### 1. Network Training 
+In this step, I train the whole network (e.g. VGG) for a number iterations (1000 iterations) for classification.
 
-### 2.Pruning
+### 2. Pruning
 There are different types of prunings. In this code, I implemented element-wise pruning in which the weights of all layers are prunned if they are smaller than a threshold.
 
-### 3.Pruning & fine tunning
-After pruning, I train the network while making the prunned values to zero.  
+### 3. Pruning & fine tunning
+After pruning, I train the network for a number of iterations (1000 iterations) while making the prunned values to zero.  
 
-### 4.Quantization
+### 4. Quantization
 There are different types of quantizations. In this code, I implemented clutering-based quantization based on K-means clustering.
 For VGG, I used 10 clusters to get high performance. With less number of clusters, there is drop in the accuracy.
 
-### 5.Quantization & fine tunning
-After quantization, I fine tunned the network with the quantized values.
+### 5. Quantization & fine tunning
+After quantization, I fine tunned the network with the quantized values for a number of iterations (1000 iterations).
 For quantization, the clutering is aplied to each layer (connvolutional and fully connected layers) seperatly.
 
 
