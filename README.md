@@ -30,7 +30,7 @@ After pruning, I train the network for a number of iterations (1000 iterations) 
 
 ### 4. Quantization
 There are different types of quantizations. In this code, I implemented clutering-based quantization based on K-means clustering.
-For VGG, I used 10 clusters to get high performance. With less number of clusters, there is drop in the accuracy.
+For VGG, I used 5 clusters to get high performance. With less number of clusters, there is drop in the accuracy.
 
 ### 5. Quantization & fine tunning
 After quantization, I fine tunned the network with the quantized values for a number of iterations (1000 iterations).
