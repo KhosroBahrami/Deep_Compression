@@ -37,6 +37,17 @@ After quantization, I fine tunned the network with the quantized values for a nu
 For quantization, the clutering is aplied to each layer (connvolutional and fully connected layers) seperatly.
 
 
+### Compration Rate Calculation:
+I calculated the compression rate for VGG:
+
+
+
+
+
+
+
+
+
 
 
 
