@@ -38,30 +38,36 @@ For quantization, the clutering is aplied to each layer (connvolutional and full
 
 
 ### Compration Rate Calculation:
-I calculated the compression rate for VGG:
+I calculated the compression rate for VGG in the following table for pruning & quantization in the following table.
+For pruning, I calculated the ratio of prunned parameters & non-prunned parameters and I get compression rate of 3 for all layers with threshold 0.1.  
 
+For quantization, I used the following equation to calculate the compression rate 
+compression rate = (n*b)/(n*log(k)+k*b)
+where n is number of parameters, k is number of clusters & b is number of bits for each paramater (32 bits for float). 
+
+Totally, using pruning & quantization I could redice the size of VGG by 18 times. 
 
 
 | Layer  | Filter Size       | Feature size |# of Parameters | Pruning | Quantization | # of bits |
 | :---:  |  :---:            |  :---:       | :---:          | :---:   | :---: |  :---: |
-| Conv1_1| (3 * 3 * 3)*16    | 28 * 28 * 16 | 432        |  %33  |   4   |    5   |
-| Conv1_1| (3 * 3 * 16)*16   | 28 * 28 * 16 | 2304       |  %33  |   6   |    5   |
-| Pool1  |                   | 14 * 14 * 16 |  -         |   -   |       |    -   |
-| Conv2_2| (3 * 3 * 16)*32   | 14 * 14 * 32 | 4608       |  %33  |   6   |    5   |
-| Conv2_2| (3 * 3 * 32)*32   | 14 * 14 * 32 | 9216       |  %33  |   6   |    5   |
-| Pool2  |                   | 7 * 7 * 32   |  -         |   -   |       |    -   |
-| Conv3_1| (3 * 3 * 32)*64   | 7 * 7 * 64   | 18432      |  %33  |   6   |    5   |
-| Conv3_2| (3 * 3 * 64)*64   | 7 * 7 * 64   | 36864      |  %33  |   6   |    5   |
-| Pool3  |                   | 4 * 4 * 64   |   -        |   -   |       |    -   |
-| Conv4_1| (3 * 3 *64)*128   | 4 * 4 * 128  | 73728      |  %33  |   6   |    5   |
-| Conv4_2| (3 * 3 * 128)*128 | 4 * 4 * 128  | 147456     |  %33  |   6   |    5   |
-| Pool4  |                   | 2 * 2 * 128  |   -        |   -   |       |    -   |
-| Conv5_1| (3 * 3 * 128)*128 | 2 * 2 * 128  | 147456     |  %33  |   6   |    5   |
-| Conv5_2| (3 * 3 * 128)*128 | 2 * 2 * 128  | 147456     |  %33  |   6   |    5   |
-| Pool5  |                   | 1 * 1 * 128  |   -        |   -   |       |    -   |
-| FC1    | (1 * 1 * 128)*1096| 1096         | 140288     |  %33  |   6   |    5   |
-| FC2    | (1096)*1096       | 1096         | 1201216    |  %33  |   6   |    5   |
-| FC3    | (1096)*1000       | 1000         | 1096000    |  %33  |   6   |    5   |
+| Conv1_1| (3 * 3 * 3)*16    | 28 * 28 * 16 | 432        |  3  |   4   |    5   |
+| Conv1_1| (3 * 3 * 16)*16   | 28 * 28 * 16 | 2304       |  3  |   6   |    5   |
+| Pool1  |                   | 14 * 14 * 16 |  -         |   - |       |    -   |
+| Conv2_2| (3 * 3 * 16)*32   | 14 * 14 * 32 | 4608       |  3  |   6   |    5   |
+| Conv2_2| (3 * 3 * 32)*32   | 14 * 14 * 32 | 9216       |  3  |   6   |    5   |
+| Pool2  |                   | 7 * 7 * 32   |  -         |   - |       |    -   |
+| Conv3_1| (3 * 3 * 32)*64   | 7 * 7 * 64   | 18432      |  3  |   6   |    5   |
+| Conv3_2| (3 * 3 * 64)*64   | 7 * 7 * 64   | 36864      |  3  |   6   |    5   |
+| Pool3  |                   | 4 * 4 * 64   |   -        |   - |       |    -   |
+| Conv4_1| (3 * 3 *64)*128   | 4 * 4 * 128  | 73728      |  3  |   6   |    5   |
+| Conv4_2| (3 * 3 * 128)*128 | 4 * 4 * 128  | 147456     |  3  |   6   |    5   |
+| Pool4  |                   | 2 * 2 * 128  |   -        |   - |       |    -   |
+| Conv5_1| (3 * 3 * 128)*128 | 2 * 2 * 128  | 147456     |  3  |   6   |    5   |
+| Conv5_2| (3 * 3 * 128)*128 | 2 * 2 * 128  | 147456     |  3  |   6   |    5   |
+| Pool5  |                   | 1 * 1 * 128  |   -        |   - |       |    -   |
+| FC1    | (1 * 1 * 128)*1096| 1096         | 140288     |  3  |   6   |    5   |
+| FC2    | (1096)*1096       | 1096         | 1201216    |  3  |   6   |    5   |
+| FC3    | (1096)*1000       | 1000         | 1096000    |  3  |   6   |    5   |
  
 
 
