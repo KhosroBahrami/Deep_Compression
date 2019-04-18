@@ -12,27 +12,28 @@ class vgg_network(object):
                 
                 # VGG network definition
                 # Convolutional layers: 1-10
+                N_clusters=20
                 self.layer=[]
-                self.layer.append(layer(1, 16, N_clusters=5, name='conv1'))
-                self.layer.append(layer(16, 16, N_clusters=5, name='conv2'))
+                self.layer.append(layer(1, 16, N_clusters, name='conv1'))
+                self.layer.append(layer(16, 16, N_clusters, name='conv2'))
 
-                self.layer.append(layer(16, 32, N_clusters=5, name='conv3'))
-                self.layer.append(layer(32, 32, N_clusters=5, name='conv4'))
+                self.layer.append(layer(16, 32, N_clusters, name='conv3'))
+                self.layer.append(layer(32, 32, N_clusters, name='conv4'))
 
-                self.layer.append(layer(32, 64, N_clusters=5, name='conv5'))
-                self.layer.append(layer(64, 64, N_clusters=5, name='conv6'))
+                self.layer.append(layer(32, 64, N_clusters, name='conv5'))
+                self.layer.append(layer(64, 64, N_clusters, name='conv6'))
 
-                self.layer.append(layer(64, 128, N_clusters=5, name='conv7'))
-                self.layer.append(layer(128, 128, N_clusters=5, name='conv8'))
+                self.layer.append(layer(64, 128, N_clusters, name='conv7'))
+                self.layer.append(layer(128, 128, N_clusters, name='conv8'))
 
-                self.layer.append(layer(128, 128, N_clusters=5, name='conv9'))
-                self.layer.append(layer(128, 128, N_clusters=5, name='conv10'))
+                self.layer.append(layer(128, 128, N_clusters, name='conv9'))
+                self.layer.append(layer(128, 128, N_clusters, name='conv10'))
 
                 # Fully connected layers: 11-14
-                self.layer.append(layer(1*1*128, 1096, N_clusters=5, name='fc1'))
-                self.layer.append(layer(1096, 1096, N_clusters=5, name='fc2'))
-                self.layer.append(layer(1096, 1000, N_clusters=5, name='fc3'))
-                self.layer.append(layer(1000, 10, N_clusters=5, name='fc4'))
+                self.layer.append(layer(1*1*128, 1096, N_clusters, name='fc1'))
+                self.layer.append(layer(1096, 1096, N_clusters, name='fc2'))
+                self.layer.append(layer(1096, 1000, N_clusters, name='fc3'))
+                self.layer.append(layer(1000, 10, N_clusters, name='fc4'))
 
 
         # Forward pass of the network
