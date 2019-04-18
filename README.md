@@ -37,7 +37,7 @@ After quantization, I fine tunned the network with the quantized values for a nu
 For quantization, the clutering is aplied to each layer (connvolutional and fully connected layers) seperatly.
 
 
-### Compration Rate Calculation:
+### Compression rate Calculation:
 I calculated the compression rate of pruning & quantization for VGG in the following table.
 For pruning, I calculated the ratio of prunned parameters & non-prunned parameters and I get compression rate of 3 for all layers with threshold 0.1.  
 
