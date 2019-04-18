@@ -16,10 +16,10 @@ This implementation includes pruning & quantization modules in the Deep Compress
 ### Deep Neural Network
 I implemented pruning and quantization for convolutional and fully connected layers of VGG16 network. I applied VGG16 network for classification on MNIST database. 
 
-### Network Compression Steps
+### Network Compression Steps:
 The network compression has the following steps:
 
-### 1. Network Training 
+### 1. Network training 
 In this step, I train the whole network (e.g. VGG) for a number iterations (1000 iterations) for classification.
 
 ### 2. Pruning
@@ -37,7 +37,7 @@ After quantization, I fine tunned the network with the quantized values for a nu
 For quantization, the clutering is aplied to each layer (connvolutional and fully connected layers) seperatly.
 
 
-### Compression rate Calculation:
+### Compression rate calculation:
 I calculated the compression rate of pruning & quantization for VGG in the following table.
 For pruning, I calculated the ratio of prunned parameters & non-prunned parameters and I get compression rate of 3 for all layers with threshold 0.1.  
 
