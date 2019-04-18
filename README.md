@@ -38,14 +38,14 @@ For quantization, the clutering is aplied to each layer (connvolutional and full
 
 
 ### Compration Rate Calculation:
-I calculated the compression rate for VGG in the following table for pruning & quantization in the following table.
+I calculated the compression rate of pruning & quantization for VGG in the following table.
 For pruning, I calculated the ratio of prunned parameters & non-prunned parameters and I get compression rate of 3 for all layers with threshold 0.1.  
 
-For quantization, I used the following equation to calculate the compression rate 
+For quantization, I used the following equation to calculate the compression rate, 
 compression rate = (n*b)/(n*log(k)+k*b)
-where n is number of parameters, k is number of clusters & b is number of bits for each paramater (32 bits for float). 
+where n is number of parameters, k is number of clusters & b is number of bits for each parameter (32 bits for float). 
 
-Totally, using pruning & quantization I could redice the size of VGG by 18 times. 
+Totally, using pruning & quantization I could reduce size of VGG by 18 times. 
 
 
 | Layer  | Filter Size       | Feature size |# of Parameters | Pruning | Quantization | # of bits |
