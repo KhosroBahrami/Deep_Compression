@@ -14,7 +14,7 @@ This implementation includes pruning & quantization modules in the Deep Compress
 - Quantization
 
 ### Deep Neural Network
-I used pruning and quantization for convolutional and fully connected layers of VGG16 network. I applied VGG16 network for classification on MNIST database. 
+I used pruning and quantization for convolutional and fully connected layers of VGG16 network. The VGG16 network was used for classification on MNIST database. 
 
 ### Network Compression Steps:
 The network compression has the following steps:
