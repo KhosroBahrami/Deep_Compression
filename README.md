@@ -19,11 +19,11 @@ I used pruning and quantization for convolutional and fully connected layers of 
 ### Network Compression Steps:
 The network compression has the following steps:
 
-### 1. Network training 
-In this step, I train the whole network (e.g. VGG) for a number of iterations (1000 iterations) for classification.
+### 1. Whole Network training 
+In this step, the whole network (e.g. VGG) is trained for a number of iterations (1000 iterations) for classification.
 
 ### 2. Pruning
-There are different types of prunings. In this code, I used element-wise pruning in which the weights of all layers are prunned if they are smaller than a threshold.
+There are different types of prunings. In this code, element-wise pruning is used in which the weights of all layers are prunned if they are smaller than a threshold.
 
 ### 3. Pruning & fine tunning
 After pruning, the network is trained for a number of iterations (1000 iterations) while making the prunned values to zero.  
