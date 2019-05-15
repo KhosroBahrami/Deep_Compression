@@ -34,7 +34,7 @@ For VGG, 20 clusters is used to get high performance. With less number of cluste
 
 ### 5. Quantization & fine tunning
 After quantization, the network is fine tunned with the quantized values for a number of iterations (1000 iterations).
-For quantization, the clutering is applied to each layer (connvolutional and fully connected layers) separately.
+For quantization, the clustering is applied to each layer (connvolutional and fully connected layers) separately.
 
 
 ### Compression rate calculation:
