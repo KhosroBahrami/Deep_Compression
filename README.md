@@ -29,7 +29,7 @@ There are different types of prunings. In this code, element-wise pruning is use
 After pruning, the network is trained for a number of iterations (1000 iterations) while making the prunned values to zero.  
 
 ### 4. Quantization
-There are different types of quantizations. In this code, clutering-based quantization is used based on K-means clustering.
+There are different types of quantizations. In this code, clustering-based quantization is used based on K-means clustering.
 For VGG, 20 clusters is used to get high performance. With less number of clusters, there is drop in the accuracy.
 
 ### 5. Quantization & fine tunning
