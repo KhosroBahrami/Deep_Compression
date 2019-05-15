@@ -6,7 +6,7 @@ This implementation is designed with the following goals:
 - Clear Pipeline: it has pipeline of network compression including pruning and quantization.
 - Modularity: This code has been implemented for element-wise pruning and clustering-based quantization. It is modular and easy to be expanded for other types of pruning and quantization methods.
 - Extendable: Currently this code has been implemented for VGG16, but it can be extended for other networks.
-- To be deployed on Embedded Systems 
+- To be deployed on Embedded Systems. 
 
 This implementation includes pruning & quantization modules in the Deep Compression method:
 
@@ -14,38 +14,38 @@ This implementation includes pruning & quantization modules in the Deep Compress
 - Quantization
 
 ### Deep Neural Network
-I implemented pruning and quantization for convolutional and fully connected layers of VGG16 network. I applied VGG16 network for classification on MNIST database. 
+I used pruning and quantization for convolutional and fully connected layers of VGG16 network. I applied VGG16 network for classification on MNIST database. 
 
 ### Network Compression Steps:
 The network compression has the following steps:
 
 ### 1. Network training 
-In this step, I train the whole network (e.g. VGG) for a number iterations (1000 iterations) for classification.
+In this step, I train the whole network (e.g. VGG) for a number of iterations (1000 iterations) for classification.
 
 ### 2. Pruning
-There are different types of prunings. In this code, I implemented element-wise pruning in which the weights of all layers are prunned if they are smaller than a threshold.
+There are different types of prunings. In this code, I used element-wise pruning in which the weights of all layers are prunned if they are smaller than a threshold.
 
 ### 3. Pruning & fine tunning
-After pruning, I train the network for a number of iterations (1000 iterations) while making the prunned values to zero.  
+After pruning, the network is trained for a number of iterations (1000 iterations) while making the prunned values to zero.  
 
 ### 4. Quantization
-There are different types of quantizations. In this code, I implemented clutering-based quantization based on K-means clustering.
-For VGG, I used 5 clusters to get high performance. With less number of clusters, there is drop in the accuracy.
+There are different types of quantizations. In this code, clutering-based quantization is used based on K-means clustering.
+For VGG, 20 clusters is used to get high performance. With less number of clusters, there is drop in the accuracy.
 
 ### 5. Quantization & fine tunning
-After quantization, I fine tunned the network with the quantized values for a number of iterations (1000 iterations).
-For quantization, the clutering is aplied to each layer (connvolutional and fully connected layers) seperatly.
+After quantization, the network is fine tunned with the quantized values for a number of iterations (1000 iterations).
+For quantization, the clutering is applied to each layer (connvolutional and fully connected layers) separately.
 
 
 ### Compression rate calculation:
 I calculated the compression rate of pruning & quantization for VGG in the following table.
-For pruning, I calculated the ratio of prunned parameters & non-prunned parameters and I get compression rate of 3 for all layers with threshold 0.1.  
+For pruning, based on the ratio of prunned parameters & non-prunned parameters, compression rate of 3 is achieved for all layers with threshold 0.1.  
 
-For quantization, I used the following equation to calculate the compression rate, 
+For quantization, the following equation is used to calculate the compression rate, 
 compression rate = (n*b)/(n*log(k)+k*b)
 where n is number of parameters, k is number of clusters & b is number of bits for each parameter (32 bits for float). 
 
-Totally, using pruning & quantization I could reduce size of VGG by 18 times. 
+Totally, using pruning & quantization, the size of VGG can be reduced 18 times. 
 
 
 | Layer  | Filter Size       | Feature size |# of Parameters | Pruning | Quantization | # of bits |
