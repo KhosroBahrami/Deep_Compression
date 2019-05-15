@@ -42,7 +42,9 @@ I calculated the compression rate of pruning & quantization for VGG in the follo
 For pruning, based on the ratio of prunned parameters & non-prunned parameters, compression rate of 3 is achieved for all layers with threshold 0.1.  
 
 For quantization, the following equation is used to calculate the compression rate, 
+
 compression rate = (n*b)/(n*log(k)+k*b)
+
 where n is number of parameters, k is number of clusters & b is number of bits for each parameter (32 bits for float). 
 
 Totally, using pruning & quantization, the size of VGG can be reduced 18 times. 
